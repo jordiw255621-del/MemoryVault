@@ -166,10 +166,66 @@ async function fetchStats() {
   }
 }
 
+function startTypingAnimation() {
+  const el1 = document.getElementById('typingText1');
+  const el2 = document.getElementById('typingText2');
+  const el3 = document.getElementById('typingText3');
+  const cursor1 = document.getElementById('cursor1');
+  const cursor2 = document.getElementById('cursor2');
+  const cursor3 = document.getElementById('cursor3');
+  
+  if (!el1 || !el2 || !el3) return;
+  
+  const text1 = "My Morning";
+  const text2 = "Had a really productive day today.";
+  const text3 = "Feeling grateful for everything.";
+  
+  let charIndex1 = 0;
+  let charIndex2 = 0;
+  let charIndex3 = 0;
+  
+  function typeLine1() {
+    if (charIndex1 < text1.length) {
+      el1.textContent += text1.charAt(charIndex1);
+      charIndex1++;
+      setTimeout(typeLine1, 180 + Math.random() * 150);
+    } else {
+      cursor1.style.display = 'none';
+      cursor2.style.display = 'inline';
+      setTimeout(typeLine2, 400);
+    }
+  }
+  
+  function typeLine2() {
+    if (charIndex2 < text2.length) {
+      el2.textContent += text2.charAt(charIndex2);
+      charIndex2++;
+      setTimeout(typeLine2, 120 + Math.random() * 100);
+    } else {
+      cursor2.style.display = 'none';
+      cursor3.style.display = 'inline';
+      setTimeout(typeLine3, 300);
+    }
+  }
+  
+  function typeLine3() {
+    if (charIndex3 < text3.length) {
+      el3.textContent += text3.charAt(charIndex3);
+      charIndex3++;
+      setTimeout(typeLine3, 130 + Math.random() * 110);
+    } else {
+      cursor3.style.display = 'none';
+    }
+  }
+  
+  setTimeout(typeLine1, 500);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (!checkAuth()) return;
   initAnimations();
   animateOnScroll();
+  startTypingAnimation();
 });
 
 window.addEventListener('beforeunload', () => {

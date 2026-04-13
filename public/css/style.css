@@ -712,6 +712,45 @@ button, input, textarea, select {
   color: var(--primary-dark);
 }
 
+.typing-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 80px;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.typing-line {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  min-height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.typing-line-full {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.typing-text {
+  display: inline;
+}
+
+.typing-cursor {
+  display: inline-block;
+  color: var(--primary);
+  font-weight: 400;
+  animation: cursorBlink 0.7s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
 .hero-content p {
   font-size: 20px;
   color: var(--text-secondary);
