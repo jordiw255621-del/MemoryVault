@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Entry - MemoryVault</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+        <h1>MemoryVault</h1>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="entries.html" class="active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Entries
+        </a>
+        <a href="trash.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          Trash
+        </a>
+        <a href="settings.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div class="user-details">
+            <h4 id="userName">User</h4>
+            <p>Personal Account</p>
+          </div>
+        </div>
+        <a href="#" onclick="logout()" class="btn btn-ghost btn-sm" style="width:100%;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header animation-wrapper">
+        <div>
+          <a href="entries.html" class="btn btn-ghost btn-sm" style="margin-bottom: 12px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Entries
+          </a>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary" onclick="copyEntryText()">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012 2h2a2 2 0 012-2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+            </svg>
+            Copy Text
+          </button>
+          <button class="btn btn-secondary" onclick="downloadEntryPhotos()" id="downloadPhotosBtn" style="display: none;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Photos
+          </button>
+          <button class="btn btn-secondary" onclick="editEntry()">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+            Edit
+          </button>
+          <button class="btn btn-danger" onclick="deleteEntry()">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </header>
+
+      <div class="card animation-wrapper" style="max-width: 800px;" id="entryContent">
+        <p class="entry-date" id="entryDate"></p>
+        <h2 id="entryTitle" style="margin-bottom: 24px; font-size: 32px;"></h2>
+        <div id="entryBody" style="white-space: pre-wrap; font-size: 16px; line-height: 1.8;"></div>
+        <div class="photo-gallery" id="photoGallery" style="margin-top: 32px;"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+    <img src="" alt="Preview" id="lightboxImg">
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    const user = getUser();
+    if (user) {
+      document.getElementById('userName').textContent = user.username;
+      document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const entryId = urlParams.get('id');
+    let currentEntry = null;
+    let currentPhotos = [];
+
+    async function loadEntry() {
+      try {
+        const entry = await api.request(`/entries/${entryId}`);
+        currentEntry = entry;
+        
+        const date = new Date(entry.created_at).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        document.getElementById('entryDate').textContent = date;
+        document.getElementById('entryTitle').textContent = entry.title;
+        document.getElementById('entryBody').textContent = entry.content;
+
+        if (entry.photos && entry.photos.length > 0) {
+          currentPhotos = entry.photos;
+          document.getElementById('downloadPhotosBtn').style.display = 'inline-flex';
+          const gallery = document.getElementById('photoGallery');
+          gallery.innerHTML = entry.photos.map(photo => `
+            <div class="photo-item">
+              <img src="/api/photos/${photo.id}/download" alt="${photo.original_name}" onclick="openLightbox('/api/photos/${photo.id}/download')">
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        toast.show('Entry not found', 'error');
+        window.location.href = 'entries.html';
+      }
+    }
+
+    function editEntry() {
+      window.location.href = `entry-form.html?id=${entryId}`;
+    }
+
+    function deleteEntry() {
+      modal.show({
+        title: 'Delete Entry',
+        message: 'This entry will be moved to trash. You can restore it within 30 days.',
+        onConfirm: async () => {
+          try {
+            await api.request(`/entries/${entryId}`, { method: 'DELETE' });
+            toast.show('Entry moved to trash');
+            setTimeout(() => {
+              window.location.href = 'entries.html';
+            }, 1000);
+          } catch (error) {
+            toast.show('Failed to delete entry', 'error');
+          }
+        }
+      });
+    }
+
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    async function copyEntryText() {
+      if (!currentEntry) return;
+      
+      const text = `${currentEntry.title}\n\n${currentEntry.content}`;
+      
+      try {
+        await navigator.clipboard.writeText(text);
+        toast.show('Entry text copied to clipboard');
+      } catch (error) {
+        toast.show('Failed to copy text', 'error');
+      }
+    }
+
+    async function downloadEntryPhotos() {
+      if (currentPhotos.length === 0) return;
+      
+      const btn = document.getElementById('downloadPhotosBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<div class="loading-spinner" style="display:block; margin:0 auto;"></div>';
+      btn.disabled = true;
+
+      try {
+        const JSZip = window.JSZip;
+        const zip = new JSZip();
+
+        for (let i = 0; i < currentPhotos.length; i++) {
+          const photo = currentPhotos[i];
+          const response = await fetch(`/api/photos/${photo.id}/download`);
+          const blob = await response.blob();
+          zip.file(photo.original_name, blob);
+        }
+
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${currentEntry.title.replace(/[^a-zA-Z0-9]/g, '_')}_photos.zip`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        toast.show('Photos downloaded');
+      } catch (error) {
+        toast.show('Failed to download photos', 'error');
+      }
+
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
+
+    if (entryId) {
+      loadEntry();
+    } else {
+      window.location.href = 'entries.html';
+    }
+  </script>
+</body>
+</html>

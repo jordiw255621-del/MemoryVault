@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Entries - MemoryVault</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+        <h1>MemoryVault</h1>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="entries.html" class="active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Entries
+        </a>
+        <a href="trash.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          Trash
+        </a>
+        <a href="settings.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div class="user-details">
+            <h4 id="userName">User</h4>
+            <p>Personal Account</p>
+          </div>
+        </div>
+        <a href="#" onclick="logout()" class="btn btn-ghost btn-sm" style="width:100%;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header animation-wrapper">
+        <div>
+          <h2>Journal Entries</h2>
+          <p style="color: var(--text-secondary); margin-top: 8px;" id="entriesCount">All your memories in one place</p>
+        </div>
+        <div class="header-actions">
+          <a href="entry-form.html" class="btn btn-primary">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            New Entry
+          </a>
+        </div>
+      </header>
+
+      <div class="search-bar animation-wrapper">
+        <div class="search-input">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search entries...">
+        </div>
+        <select class="filter-select" id="filterSelect">
+          <option value="">All Entries</option>
+          <option value="true">With Photos</option>
+        </select>
+      </div>
+
+      <div class="entries-grid" id="entriesList">
+      </div>
+
+      <div class="pagination" id="pagination">
+      </div>
+    </main>
+  </div>
+
+  <a href="entry-form.html" class="floating-btn slide-up">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+    </svg>
+  </a>
+
+  <script src="/js/main.js"></script>
+  <script>
+    const user = getUser();
+    if (user) {
+      document.getElementById('userName').textContent = user.username;
+      document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
+    }
+
+    let currentPage = 1;
+    let searchTerm = '';
+    let hasPhotos = '';
+
+    async function loadEntries(page = 1) {
+      currentPage = page;
+      try {
+        const params = new URLSearchParams({
+          page: page,
+          limit: 12,
+          search: searchTerm,
+          has_photos: hasPhotos
+        });
+
+        const response = await api.request(`/entries?${params}`);
+        const container = document.getElementById('entriesList');
+        
+        document.getElementById('entriesCount').textContent = `${response.total} entries found`;
+
+        if (response.entries.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state" style="grid-column: 1 / -1;">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <h3>No entries found</h3>
+              <p>${searchTerm ? 'Try adjusting your search' : 'Start journaling to see your entries here'}</p>
+              ${!searchTerm ? '<a href="entry-form.html" class="btn btn-primary">Create First Entry</a>' : ''}
+            </div>
+          `;
+          document.getElementById('pagination').innerHTML = '';
+          return;
+        }
+
+        container.innerHTML = response.entries.map((entry, index) => {
+          const date = new Date(entry.created_at).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+          return `
+            <a href="entry-view.html?id=${entry.id}" class="entry-card animation-wrapper stagger-${(index % 6) + 1}">
+              <p class="entry-date">${date}</p>
+              <h3 class="entry-title">${entry.title}</h3>
+              <p class="entry-preview">${entry.content.substring(0, 150)}...</p>
+              <div class="entry-meta">
+                <span class="entry-photos" style="display: ${entry.photo_count > 0 ? 'flex' : 'none'}">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  ${entry.photo_count}
+                </span>
+              </div>
+            </a>
+          `;
+        }).join('');
+
+        const pagination = document.getElementById('pagination');
+        if (response.totalPages > 1) {
+          let paginationHTML = '';
+          for (let i = 1; i <= response.totalPages; i++) {
+            paginationHTML += `
+              <button class="${i === currentPage ? 'active' : ''}" onclick="loadEntries(${i})">${i}</button>
+            `;
+          }
+          pagination.innerHTML = paginationHTML;
+        } else {
+          pagination.innerHTML = '';
+        }
+
+        setTimeout(() => {
+          document.querySelectorAll('.animation-wrapper').forEach(el => el.classList.add('visible'));
+        }, 100);
+      } catch (error) {
+        console.error('Failed to load entries:', error);
+      }
+    }
+
+    let searchTimeout;
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchTerm = e.target.value;
+        loadEntries(1);
+      }, 300);
+    });
+
+    document.getElementById('filterSelect').addEventListener('change', (e) => {
+      hasPhotos = e.target.value;
+      loadEntries(1);
+    });
+
+    loadEntries();
+  </script>
+</body>
+</html>
