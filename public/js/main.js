@@ -148,7 +148,19 @@ function checkAuth() {
 
 function getUser() {
   const user = localStorage.getItem('user');
-  return user ? JSON.parse(user) : null;
+  if (!user) return null;
+  try {
+    const parsed = JSON.parse(user);
+    if (typeof parsed === 'string') {
+      return {username: parsed};
+    }
+    if (parsed.user) {
+      return parsed.user;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
 }
 
 function logout() {
@@ -228,6 +240,112 @@ document.addEventListener('DOMContentLoaded', () => {
   startTypingAnimation();
 });
 
+// Global theme management for all pages
+function initGlobalThemes() {
+  const savedTheme = localStorage.getItem('theme');
+  const savedRounding = localStorage.getItem('themeRounding') || '12';
+
+  // Apply saved theme
+  if (savedTheme && savedTheme !== 'default') {
+    document.body.classList.add(`theme-${savedTheme}`);
+  }
+
+  // Apply saved custom colors
+  const root = document.documentElement;
+  const customPrimary = localStorage.getItem('customPrimary') || '#E8A838';
+  const customSecondary = localStorage.getItem('customSecondary') || '#E85A4F';
+  const customAccent = localStorage.getItem('customAccent') || '#FDF6E3';
+  const customTextPrimary = localStorage.getItem('customTextPrimary') || '#2D2A26';
+  const customTextSecondary = localStorage.getItem('customTextSecondary') || '#6B6560';
+
+  root.style.setProperty('--primary-adjusted', customPrimary);
+  root.style.setProperty('--secondary-adjusted', customSecondary);
+  root.style.setProperty('--accent-adjusted', customAccent);
+  root.style.setProperty('--text-primary-adjusted', customTextPrimary);
+  root.style.setProperty('--text-secondary-adjusted', customTextSecondary);
+
+  // Apply rounding adjustments
+  const roundingValue = parseInt(savedRounding);
+  root.style.setProperty('--radius-sm', Math.max(4, roundingValue - 4) + 'px');
+  root.style.setProperty('--radius-md', roundingValue + 'px');
+  root.style.setProperty('--radius-lg', (roundingValue + 4) + 'px');
+  root.style.setProperty('--radius-xl', (roundingValue + 12) + 'px');
+}
+
+
+
+// Initialize themes and cursor trail when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  initGlobalThemes();
+  // Initialize cursor trail if enabled
+  if (localStorage.getItem('cursorTrailEnabled') === 'true') {
+    initCursorTrail();
+  }
+});
+
 window.addEventListener('beforeunload', () => {
   modal.hide();
 });
+
+// Cursor orb functionality
+let cursorOrbEnabled = false;
+let cursorOrbIntensity = 50;
+let cursorOrbElement = null;
+
+function initCursorTrail() {
+  if (cursorOrbEnabled) return;
+  cursorOrbEnabled = true;
+  cursorOrbIntensity = parseInt(localStorage.getItem('cursorTrailIntensity')) || 50;
+
+  // Create the orb element if it doesn't exist
+  if (!cursorOrbElement) {
+    cursorOrbElement = document.createElement('div');
+    cursorOrbElement.className = 'cursor-orb';
+    cursorOrbElement.style.position = 'fixed';
+    cursorOrbElement.style.pointerEvents = 'none';
+    cursorOrbElement.style.zIndex = '-1';
+    cursorOrbElement.style.transition = 'all 0.3s ease-out';
+    document.body.appendChild(cursorOrbElement);
+  }
+
+  document.addEventListener('mousemove', updateOrb);
+}
+
+function disableCursorTrail() {
+  cursorOrbEnabled = false;
+  document.removeEventListener('mousemove', updateOrb);
+
+  // Hide the orb
+  if (cursorOrbElement) {
+    cursorOrbElement.style.display = 'none';
+  }
+}
+
+function updateOrb(e) {
+  if (!cursorOrbEnabled || !cursorOrbElement) return;
+
+  // Adjust size based on intensity (larger base size)
+  const size = 60 + (cursorOrbIntensity / 100) * 100; // 60-160px
+  cursorOrbElement.style.width = size + 'px';
+  cursorOrbElement.style.height = size + 'px';
+
+  // Position the orb (centered on cursor)
+  cursorOrbElement.style.left = (e.clientX - size / 2) + 'px';
+  cursorOrbElement.style.top = (e.clientY - size / 2) + 'px';
+
+  // Adjust glow intensity with softer, warmer colors
+  const glowIntensity = 20 + (cursorOrbIntensity / 100) * 80; // 20-100px
+  cursorOrbElement.style.boxShadow = `
+    0 0 ${glowIntensity * 0.5}px rgba(255, 255, 255, 0.9),
+    0 0 ${glowIntensity}px rgba(255, 220, 200, 0.7),
+    0 0 ${glowIntensity * 1.5}px rgba(255, 200, 150, 0.5),
+    0 0 ${glowIntensity * 2}px rgba(255, 180, 100, 0.3)
+  `;
+
+  // Ensure it's visible
+  cursorOrbElement.style.display = 'block';
+}
+
+// Global functions for settings
+window.initCursorTrail = initCursorTrail;
+window.disableCursorTrail = disableCursorTrail;

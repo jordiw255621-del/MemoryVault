@@ -13,7 +13,7 @@
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
         </svg>
-        <h1>MemoryVault</h1>
+        <h1 onclick="window.location.href='index.html'" style="cursor: pointer;">MemoryVault</h1>
       </div>
       <nav class="sidebar-nav">
         <a href="dashboard.html">
@@ -80,22 +80,153 @@
         <p style="font-size: 13px; color: var(--text-muted);">Contact support to update your profile</p>
       </div>
 
+
+
+
+
       <div class="settings-section animation-wrapper">
-        <h3>Export Data</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 20px;">Download your journal data</p>
-        <div class="export-buttons">
-          <button class="btn btn-secondary" onclick="copyAllText()">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012 2h2a2 2 0 012-2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
-            </svg>
-            Copy All Text
-          </button>
-          <button class="btn btn-primary" onclick="downloadImages()">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-            </svg>
-            Download Images (ZIP)
-          </button>
+        <h3>Visual Themes</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">Customize your app's appearance with beautiful, accessible themes</p>
+
+        <div class="themes-grid">
+          <!-- Default Theme -->
+          <div class="theme-card" data-theme="default" onclick="selectTheme('default')">
+            <div class="theme-preview">
+              <div class="preview-header">
+                <div class="preview-button primary"></div>
+                <div class="preview-button secondary"></div>
+              </div>
+              <div class="preview-content">
+                <div class="preview-text title"></div>
+                <div class="preview-text body"></div>
+                <div class="preview-text body short"></div>
+              </div>
+            </div>
+            <div class="theme-info">
+              <h4>Default</h4>
+              <p>Warm golden tones for a classic, inviting feel</p>
+            </div>
+            <div class="theme-actions">
+              <button class="btn btn-sm" onclick="event.stopPropagation(); previewTheme('default')">Preview</button>
+              <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); applyTheme('default')">Apply</button>
+            </div>
+            <div class="theme-selected" id="selected-default">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Dark Mode Theme -->
+          <div class="theme-card" data-theme="dark" onclick="selectTheme('dark')">
+            <div class="theme-preview dark-preview">
+              <div class="preview-header">
+                <div class="preview-button primary"></div>
+                <div class="preview-button secondary"></div>
+              </div>
+              <div class="preview-content">
+                <div class="preview-text title"></div>
+                <div class="preview-text body"></div>
+                <div class="preview-text body short"></div>
+              </div>
+            </div>
+            <div class="theme-info">
+              <h4>Dark Mode</h4>
+              <p>High-contrast theme perfect for low-light environments</p>
+            </div>
+            <div class="theme-actions">
+              <button class="btn btn-sm" onclick="event.stopPropagation(); previewTheme('dark')">Preview</button>
+              <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); applyTheme('dark')">Apply</button>
+            </div>
+            <div class="theme-selected" id="selected-dark">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cursor Effects -->
+        <div class="cursor-effects" style="margin-top: 24px; border-top: 1px solid var(--border); padding-top: 20px;">
+          <h4 style="margin-bottom: 16px; color: var(--text-primary);">Cursor Effects</h4>
+
+          <div class="effect-group">
+            <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <input type="checkbox" id="cursorTrailEnabled" onchange="toggleCursorTrail(this.checked)">
+              <span>Enable Cursor Trail</span>
+            </label>
+
+            <div class="slider-group" style="display: flex; align-items: center; gap: 12px;">
+              <label for="cursorTrailIntensity" style="min-width: 80px;">Intensity:</label>
+              <input type="range" id="cursorTrailIntensity" min="10" max="100" value="50" step="5" oninput="updateCursorTrailIntensity(this.value)" style="flex: 1;">
+              <span id="trailIntensityValue" style="min-width: 40px; text-align: right;">50%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme Status -->
+        <div class="theme-status" id="themeStatus" style="display: none; margin-top: 20px; padding: 12px; border-radius: var(--radius-md);">
+          <div class="status-content"></div>
+        </div>
+
+        <!-- Theme Customization -->
+        <div class="theme-customization" style="margin-top: 24px; border-top: 1px solid var(--border); padding-top: 20px;">
+          <h4 style="margin-bottom: 16px; color: var(--text-primary);">Color Customization</h4>
+
+          <div class="color-customization-grid">
+            <div class="color-group">
+              <label>Primary Color</label>
+              <div class="color-input-group">
+                <input type="color" id="primaryColor" value="#E8A838" onchange="updatePrimaryColor(this.value)">
+                <input type="text" id="primaryHex" value="#E8A838" oninput="updatePrimaryColor(this.value)" class="hex-input">
+              </div>
+            </div>
+
+            <div class="color-group">
+              <label>Secondary Color</label>
+              <div class="color-input-group">
+                <input type="color" id="secondaryColor" value="#E85A4F" onchange="updateSecondaryColor(this.value)">
+                <input type="text" id="secondaryHex" value="#E85A4F" oninput="updateSecondaryColor(this.value)" class="hex-input">
+              </div>
+            </div>
+
+            <div class="color-group">
+              <label>Accent Color</label>
+              <div class="color-input-group">
+                <input type="color" id="accentColor" value="#FDF6E3" onchange="updateAccentColor(this.value)">
+                <input type="text" id="accentHex" value="#FDF6E3" oninput="updateAccentColor(this.value)" class="hex-input">
+              </div>
+            </div>
+
+            <div class="color-group">
+              <label>Text Primary</label>
+              <div class="color-input-group">
+                <input type="color" id="textPrimaryColor" value="#2D2A26" onchange="updateTextPrimaryColor(this.value)">
+                <input type="text" id="textPrimaryHex" value="#2D2A26" oninput="updateTextPrimaryColor(this.value)" class="hex-input">
+              </div>
+            </div>
+
+            <div class="color-group">
+              <label>Text Secondary</label>
+              <div class="color-input-group">
+                <input type="color" id="textSecondaryColor" value="#6B6560" onchange="updateTextSecondaryColor(this.value)">
+                <input type="text" id="textSecondaryHex" value="#6B6560" oninput="updateTextSecondaryColor(this.value)" class="hex-input">
+              </div>
+            </div>
+
+            <div class="color-group">
+              <label>Corner Rounding</label>
+              <div class="rounding-input-group">
+                <input type="range" id="themeRounding" min="0" max="20" value="12" step="1" oninput="updateThemeRounding(this.value)">
+                <span class="rounding-value" id="roundingValue">12px</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="customization-actions" style="margin-top: 20px;">
+            <button class="btn btn-secondary" onclick="resetColorsToTheme()">Reset to Theme Defaults</button>
+            <button class="btn btn-primary" onclick="saveCustomizations()">Save Color Preferences</button>
+          </div>
         </div>
       </div>
 
@@ -116,11 +247,329 @@
   <script>
     const user = getUser();
     if (user) {
-      document.getElementById('userName').textContent = user.username;
-      document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
-      document.getElementById('profileUsername').value = user.username;
-      document.getElementById('profileEmail').value = user.email;
+      const displayName = typeof user === 'string' ? user : (user.username || user.name || user.email || 'User');
+      document.getElementById('userName').textContent = displayName;
+      document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
+      const username = typeof user === 'string' ? user : (user.username || '');
+      const email = typeof user === 'object' ? (user.email || '') : '';
+      document.getElementById('profileUsername').value = username;
+      document.getElementById('profileEmail').value = email;
     }
+
+    // Theme functions with proper functionality
+    function previewTheme(themeName) {
+      console.log('Previewing theme:', themeName);
+      // Temporarily apply theme for preview (without saving)
+      document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
+      if (themeName !== 'default') {
+        document.body.classList.add(`theme-${themeName}`);
+      }
+      // Re-apply current customizations to the new theme
+      applyThemeRounding();
+    }
+
+    function selectTheme(themeName) {
+      console.log('Select theme:', themeName);
+      applyTheme(themeName);
+    }
+
+    function applyTheme(themeName) {
+      console.log('Applying theme:', themeName);
+      // Remove existing theme classes
+      document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
+      // Apply new theme
+      if (themeName !== 'default') {
+        document.body.classList.add(`theme-${themeName}`);
+      }
+      // Save to localStorage
+      localStorage.setItem('theme', themeName);
+
+      // Update selected indicator
+      document.querySelectorAll('.theme-selected').forEach(el => el.style.display = 'none');
+      document.getElementById('selected-' + themeName).style.display = 'block';
+
+      // Reset custom colors to theme defaults
+      resetColorsToTheme();
+
+      // Apply customizations to the new theme
+      applyThemeRounding();
+    }
+
+    // Color customization variables
+    let customPrimary = '#E8A838';
+    let customSecondary = '#E85A4F';
+    let customAccent = '#FDF6E3';
+    let customTextPrimary = '#2D2A26';
+    let customTextSecondary = '#6B6560';
+    let themeRounding = 12;
+
+    // Utility function to validate hex color
+    function isValidHexColor(hex) {
+      return /^#[0-9A-Fa-f]{6}$/.test(hex);
+    }
+
+    // Color picker functions
+    function updatePrimaryColor(color) {
+      if (!isValidHexColor(color)) {
+        // If invalid hex, try to fix it or revert
+        if (color.startsWith('#') && color.length > 1) {
+          while (color.length < 7) color += '0';
+          color = color.substring(0, 7);
+        } else {
+          // Revert to current value
+          color = customPrimary;
+        }
+      }
+
+      customPrimary = color;
+      document.getElementById('primaryHex').value = color;
+      document.getElementById('primaryColor').value = color;
+
+      // Apply the color change
+      const root = document.documentElement;
+      root.style.setProperty('--primary-adjusted', color);
+
+      saveCustomizations();
+    }
+
+    function updateSecondaryColor(color) {
+      if (!isValidHexColor(color)) {
+        if (color.startsWith('#') && color.length > 1) {
+          while (color.length < 7) color += '0';
+          color = color.substring(0, 7);
+        } else {
+          color = customSecondary;
+        }
+      }
+
+      customSecondary = color;
+      document.getElementById('secondaryHex').value = color;
+      document.getElementById('secondaryColor').value = color;
+
+      const root = document.documentElement;
+      root.style.setProperty('--secondary-adjusted', color);
+
+      saveCustomizations();
+    }
+
+    function updateAccentColor(color) {
+      if (!isValidHexColor(color)) {
+        if (color.startsWith('#') && color.length > 1) {
+          while (color.length < 7) color += '0';
+          color = color.substring(0, 7);
+        } else {
+          color = customAccent;
+        }
+      }
+
+      customAccent = color;
+      document.getElementById('accentHex').value = color;
+      document.getElementById('accentColor').value = color;
+
+      const root = document.documentElement;
+      root.style.setProperty('--accent-adjusted', color);
+
+      saveCustomizations();
+    }
+
+    function updateTextPrimaryColor(color) {
+      if (!isValidHexColor(color)) {
+        if (color.startsWith('#') && color.length > 1) {
+          while (color.length < 7) color += '0';
+          color = color.substring(0, 7);
+        } else {
+          color = customTextPrimary;
+        }
+      }
+
+      customTextPrimary = color;
+      document.getElementById('textPrimaryHex').value = color;
+      document.getElementById('textPrimaryColor').value = color;
+
+      const root = document.documentElement;
+      root.style.setProperty('--text-primary-adjusted', color);
+
+      saveCustomizations();
+    }
+
+    function updateTextSecondaryColor(color) {
+      if (!isValidHexColor(color)) {
+        if (color.startsWith('#') && color.length > 1) {
+          while (color.length < 7) color += '0';
+          color = color.substring(0, 7);
+        } else {
+          color = customTextSecondary;
+        }
+      }
+
+      customTextSecondary = color;
+      document.getElementById('textSecondaryHex').value = color;
+      document.getElementById('textSecondaryColor').value = color;
+
+      const root = document.documentElement;
+      root.style.setProperty('--text-secondary-adjusted', color);
+
+      saveCustomizations();
+    }
+
+    function updateThemeRounding(value) {
+      themeRounding = parseInt(value);
+      document.getElementById('roundingValue').textContent = value + 'px';
+
+      // Apply rounding changes
+      const root = document.documentElement;
+      root.style.setProperty('--radius-sm', Math.max(4, themeRounding - 4) + 'px');
+      root.style.setProperty('--radius-md', themeRounding + 'px');
+      root.style.setProperty('--radius-lg', (themeRounding + 4) + 'px');
+      root.style.setProperty('--radius-xl', (themeRounding + 12) + 'px');
+
+      saveCustomizations();
+    }
+
+    function applyThemeRounding() {
+      const root = document.documentElement;
+      root.style.setProperty('--radius-sm', Math.max(4, themeRounding - 4) + 'px');
+      root.style.setProperty('--radius-md', themeRounding + 'px');
+      root.style.setProperty('--radius-lg', (themeRounding + 4) + 'px');
+      root.style.setProperty('--radius-xl', (themeRounding + 12) + 'px');
+    }
+
+    function resetColorsToTheme() {
+      // Reset to current theme's default colors
+      const currentTheme = localStorage.getItem('theme') || 'default';
+
+      if (currentTheme === 'default') {
+        customPrimary = '#E8A838';
+        customSecondary = '#E85A4F';
+        customAccent = '#FDF6E3';
+        customTextPrimary = '#2D2A26';
+        customTextSecondary = '#6B6560';
+      } else if (currentTheme === 'dark') {
+        customPrimary = '#60A5FA';
+        customSecondary = '#8B5CF6';
+        customAccent = '#1F2937';
+        customTextPrimary = '#FFFFFF';
+        customTextSecondary = '#FFFFFF';
+      }
+
+      themeRounding = 12;
+
+      // Update UI
+      document.getElementById('primaryColor').value = customPrimary;
+      document.getElementById('primaryHex').value = customPrimary;
+      document.getElementById('secondaryColor').value = customSecondary;
+      document.getElementById('secondaryHex').value = customSecondary;
+      document.getElementById('accentColor').value = customAccent;
+      document.getElementById('accentHex').value = customAccent;
+      document.getElementById('textPrimaryColor').value = customTextPrimary;
+      document.getElementById('textPrimaryHex').value = customTextPrimary;
+      document.getElementById('textSecondaryColor').value = customTextSecondary;
+      document.getElementById('textSecondaryHex').value = customTextSecondary;
+      document.getElementById('themeRounding').value = themeRounding;
+      document.getElementById('roundingValue').textContent = themeRounding + 'px';
+
+      // Apply the reset colors
+      const root = document.documentElement;
+      root.style.setProperty('--primary-adjusted', customPrimary);
+      root.style.setProperty('--secondary-adjusted', customSecondary);
+      root.style.setProperty('--accent-adjusted', customAccent);
+      root.style.setProperty('--text-primary-adjusted', customTextPrimary);
+      root.style.setProperty('--text-secondary-adjusted', customTextSecondary);
+
+      root.style.setProperty('--radius-sm', '8px');
+      root.style.setProperty('--radius-md', '12px');
+      root.style.setProperty('--radius-lg', '16px');
+      root.style.setProperty('--radius-xl', '24px');
+
+      saveCustomizations();
+
+      console.log('Colors reset to theme defaults');
+    }
+
+    function saveCustomizations() {
+      localStorage.setItem('customPrimary', customPrimary);
+      localStorage.setItem('customSecondary', customSecondary);
+      localStorage.setItem('customAccent', customAccent);
+      localStorage.setItem('customTextPrimary', customTextPrimary);
+      localStorage.setItem('customTextSecondary', customTextSecondary);
+      localStorage.setItem('themeRounding', themeRounding);
+    }
+
+    // Cursor trail functions
+    function toggleCursorTrail(enabled) {
+      localStorage.setItem('cursorTrailEnabled', enabled);
+      if (enabled) {
+        initCursorTrail();
+      } else {
+        disableCursorTrail();
+      }
+    }
+
+    function updateCursorTrailIntensity(value) {
+      document.getElementById('trailIntensityValue').textContent = value + '%';
+      localStorage.setItem('cursorTrailIntensity', value);
+    }
+
+    // Initialize color customizations
+    function initCustomizations() {
+      // Load saved custom colors
+      customPrimary = localStorage.getItem('customPrimary') || '#E8A838';
+      customSecondary = localStorage.getItem('customSecondary') || '#E85A4F';
+      customAccent = localStorage.getItem('customAccent') || '#FDF6E3';
+      customTextPrimary = localStorage.getItem('customTextPrimary') || '#2D2A26';
+      customTextSecondary = localStorage.getItem('customTextSecondary') || '#6B6560';
+      themeRounding = parseInt(localStorage.getItem('themeRounding')) || 12;
+
+      // Update UI controls
+      document.getElementById('primaryColor').value = customPrimary;
+      document.getElementById('primaryHex').value = customPrimary;
+      document.getElementById('secondaryColor').value = customSecondary;
+      document.getElementById('secondaryHex').value = customSecondary;
+      document.getElementById('accentColor').value = customAccent;
+      document.getElementById('accentHex').value = customAccent;
+      document.getElementById('textPrimaryColor').value = customTextPrimary;
+      document.getElementById('textPrimaryHex').value = customTextPrimary;
+      document.getElementById('textSecondaryColor').value = customTextSecondary;
+      document.getElementById('textSecondaryHex').value = customTextSecondary;
+      document.getElementById('themeRounding').value = themeRounding;
+      document.getElementById('roundingValue').textContent = themeRounding + 'px';
+
+      // Apply saved customizations
+      const root = document.documentElement;
+      root.style.setProperty('--primary-adjusted', customPrimary);
+      root.style.setProperty('--secondary-adjusted', customSecondary);
+      root.style.setProperty('--accent-adjusted', customAccent);
+      root.style.setProperty('--text-primary-adjusted', customTextPrimary);
+      root.style.setProperty('--text-secondary-adjusted', customTextSecondary);
+
+      root.style.setProperty('--radius-sm', Math.max(4, themeRounding - 4) + 'px');
+      root.style.setProperty('--radius-md', themeRounding + 'px');
+      root.style.setProperty('--radius-lg', (themeRounding + 4) + 'px');
+      root.style.setProperty('--radius-xl', (themeRounding + 12) + 'px');
+    }
+    initCustomizations();
+
+    // Initialize cursor trail settings
+    const trailEnabled = localStorage.getItem('cursorTrailEnabled') === 'true';
+    const trailIntensity = parseInt(localStorage.getItem('cursorTrailIntensity')) || 50;
+    document.getElementById('cursorTrailEnabled').checked = trailEnabled;
+    document.getElementById('cursorTrailIntensity').value = trailIntensity;
+    document.getElementById('trailIntensityValue').textContent = trailIntensity + '%';
+    if (trailEnabled) {
+      initCursorTrail();
+    }
+
+    // Initialize theme selection indicator
+    const currentTheme = localStorage.getItem('theme') || 'default';
+    document.querySelectorAll('.theme-selected').forEach(el => el.style.display = 'none');
+    document.getElementById('selected-' + currentTheme).style.display = 'block';
+
+    function deleteAccount() {
+
+    // Expose test functions globally
+
+
+    // Initialization is handled above
 
     async function copyAllText() {
       const btn = event.target.closest('button');
@@ -191,6 +640,7 @@
         }
       });
     }
-  </script>
+  }
+</script>
 </body>
 </html>

@@ -14,7 +14,7 @@
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
         </svg>
-        <h1>MemoryVault</h1>
+        <h1 onclick="window.location.href='index.html'" style="cursor: pointer;">MemoryVault</h1>
       </div>
       <nav class="sidebar-nav">
         <a href="dashboard.html">
@@ -120,8 +120,9 @@
   <script>
     const user = getUser();
     if (user) {
-      document.getElementById('userName').textContent = user.username;
-      document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
+      const displayName = typeof user === 'string' ? user : (user.username || user.name || user.email || 'User');
+      document.getElementById('userName').textContent = displayName;
+      document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
     }
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -134,25 +135,62 @@
         const entry = await api.request(`/entries/${entryId}`);
         currentEntry = entry;
         
-        const date = new Date(entry.created_at).toLocaleDateString('en-US', {
+        const dateTime = new Date(entry.created_at).toLocaleString('en-US', {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
-          day: 'numeric'
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
         });
-        document.getElementById('entryDate').textContent = date;
+        document.getElementById('entryDate').textContent = dateTime;
         document.getElementById('entryTitle').textContent = entry.title;
         document.getElementById('entryBody').textContent = entry.content;
 
+        // Check if the entry has photos attached
         if (entry.photos && entry.photos.length > 0) {
+          // Store photos for download functionality
           currentPhotos = entry.photos;
+          // Show the download photos button
           document.getElementById('downloadPhotosBtn').style.display = 'inline-flex';
           const gallery = document.getElementById('photoGallery');
+
+          // Create placeholder img elements with data attributes for identification
           gallery.innerHTML = entry.photos.map(photo => `
             <div class="photo-item">
-              <img src="/api/photos/${photo.id}/download" alt="${photo.original_name}" onclick="openLightbox('/api/photos/${photo.id}/download')">
+              <img src="" alt="${photo.original_name}" data-photo-id="${photo.id}" onclick="openLightboxForPhoto(this)">
             </div>
           `).join('');
+
+          // Load images asynchronously with authentication
+          // Since direct img src requests don't include auth headers, we fetch manually
+          entry.photos.forEach(async (photo, index) => {
+            try {
+              // Get the auth token from localStorage
+              const token = localStorage.getItem('token');
+              const headers = {};
+              // Add Authorization header if token exists
+              if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+              }
+              // Fetch the photo as binary data (not JSON)
+              const response = await fetch(`/api/photos/${photo.id}/download`, { headers });
+              // Convert response to blob
+              const blob = await response.blob();
+              // Create a temporary URL for the blob
+              const url = URL.createObjectURL(blob);
+              // Find the corresponding img element and set its src
+              const img = gallery.querySelector(`img[data-photo-id="${photo.id}"]`);
+              if (img) {
+                img.src = url;
+                // Store the blob URL for cleanup later
+                img.dataset.blobUrl = url;
+              }
+            } catch (error) {
+              console.error('Failed to load photo:', photo.id, error);
+            }
+          });
         }
       } catch (error) {
         toast.show('Entry not found', 'error');
@@ -182,9 +220,20 @@
       });
     }
 
+    // Display the full-size image in the lightbox overlay
     function openLightbox(src) {
       document.getElementById('lightboxImg').src = src;
       document.getElementById('lightbox').classList.add('active');
+    }
+
+    // Close the lightbox overlay
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    // Open lightbox using the blob URL from the img src
+    function openLightboxForPhoto(img) {
+      openLightbox(img.src);
     }
 
     function closeLightbox() {
@@ -218,7 +267,15 @@
 
         for (let i = 0; i < currentPhotos.length; i++) {
           const photo = currentPhotos[i];
-          const response = await fetch(`/api/photos/${photo.id}/download`);
+          const token = localStorage.getItem('token');
+          const headers = {};
+          if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+          }
+          const response = await fetch(`/api/photos/${photo.id}/download`, { headers });
+          if (!response.ok) {
+            throw new Error(`Failed to download photo ${photo.original_name}`);
+          }
           const blob = await response.blob();
           zip.file(photo.original_name, blob);
         }
@@ -239,6 +296,19 @@
       btn.innerHTML = originalText;
       btn.disabled = false;
     }
+
+    // Cleanup blob URLs on page unload to prevent memory leaks
+    // Blob URLs created for photo previews should be revoked when leaving the page
+    window.addEventListener('beforeunload', () => {
+      // Find all img elements with blob URLs stored in dataset
+      const images = document.querySelectorAll('#photoGallery img[data-blob-url]');
+      images.forEach(img => {
+        if (img.dataset.blobUrl) {
+          // Revoke the object URL to free up memory
+          URL.revokeObjectURL(img.dataset.blobUrl);
+        }
+      });
+    });
 
     if (entryId) {
       loadEntry();

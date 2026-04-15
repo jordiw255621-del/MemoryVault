@@ -13,7 +13,7 @@
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
         </svg>
-        <h1>MemoryVault</h1>
+        <h1 onclick="window.location.href='index.html'" style="cursor: pointer;">MemoryVault</h1>
       </div>
       <nav class="sidebar-nav">
         <a href="dashboard.html">
@@ -106,8 +106,9 @@
   <script>
     const user = getUser();
     if (user) {
-      document.getElementById('userName').textContent = user.username;
-      document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
+      const displayName = typeof user === 'string' ? user : (user.username || user.name || user.email || 'User');
+      document.getElementById('userName').textContent = displayName;
+      document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
     }
 
     let currentPage = 1;
@@ -125,11 +126,12 @@
         });
 
         const response = await api.request(`/entries?${params}`);
+        const entries = response.entries || response.data || response || [];
         const container = document.getElementById('entriesList');
-        
-        document.getElementById('entriesCount').textContent = `${response.total} entries found`;
 
-        if (response.entries.length === 0) {
+        document.getElementById('entriesCount').textContent = `${response.total || entries.length} entries found`;
+
+        if (entries.length === 0) {
           container.innerHTML = `
             <div class="empty-state" style="grid-column: 1 / -1;">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,11 +146,14 @@
           return;
         }
 
-        container.innerHTML = response.entries.map((entry, index) => {
-          const date = new Date(entry.created_at).toLocaleDateString('en-US', {
+        container.innerHTML = entries.map((entry, index) => {
+          const date = new Date(entry.created_at).toLocaleString('en-US', {
             year: 'numeric',
             month: 'short',
-            day: 'numeric'
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
           });
           return `
             <a href="entry-view.html?id=${entry.id}" class="entry-card animation-wrapper stagger-${(index % 6) + 1}">
@@ -168,9 +173,10 @@
         }).join('');
 
         const pagination = document.getElementById('pagination');
-        if (response.totalPages > 1) {
+        const totalPages = response.totalPages || Math.ceil((response.total || entries.length) / 12);
+        if (totalPages > 1) {
           let paginationHTML = '';
-          for (let i = 1; i <= response.totalPages; i++) {
+          for (let i = 1; i <= totalPages; i++) {
             paginationHTML += `
               <button class="${i === currentPage ? 'active' : ''}" onclick="loadEntries(${i})">${i}</button>
             `;
@@ -185,6 +191,17 @@
         }, 100);
       } catch (error) {
         console.error('Failed to load entries:', error);
+        const container = document.getElementById('entriesList');
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3>Unable to load entries</h3>
+            <p>Please try refreshing the page</p>
+          </div>
+        `;
+        document.getElementById('pagination').innerHTML = '';
       }
     }
 
