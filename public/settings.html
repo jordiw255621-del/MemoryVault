@@ -34,6 +34,18 @@
           </svg>
           Trash
         </a>
+        <a href="inspiration.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+          Inspiration
+        </a>
+        <a href="community.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          Community
+        </a>
         <a href="settings.html" class="active">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
@@ -153,13 +165,24 @@
           <div class="effect-group">
             <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
               <input type="checkbox" id="cursorTrailEnabled" onchange="toggleCursorTrail(this.checked)">
-              <span>Enable Cursor Trail</span>
+              <span>Enable Trail</span>
             </label>
 
             <div class="slider-group" style="display: flex; align-items: center; gap: 12px;">
               <label for="cursorTrailIntensity" style="min-width: 80px;">Intensity:</label>
               <input type="range" id="cursorTrailIntensity" min="10" max="100" value="50" step="5" oninput="updateCursorTrailIntensity(this.value)" style="flex: 1;">
               <span id="trailIntensityValue" style="min-width: 40px; text-align: right;">50%</span>
+            </div>
+
+            <div class="color-group" style="display: flex; align-items: center; gap: 12px; margin-top: 12px;">
+              <label for="cursorTrailColor" style="min-width: 80px;">Color:</label>
+              <input type="color" id="cursorTrailColor" value="#ffffff" onchange="updateCursorTrailColor(this.value)">
+            </div>
+
+            <div class="slider-group" style="display: flex; align-items: center; gap: 12px; margin-top: 12px;">
+              <label for="cursorTrailSpeed" style="min-width: 80px;">Speed:</label>
+              <input type="range" id="cursorTrailSpeed" min="0.1" max="1.0" value="0.3" step="0.1" oninput="updateCursorTrailSpeed(this.value)" style="flex: 1;">
+              <span id="trailSpeedValue" style="min-width: 40px; text-align: right;">0.3s</span>
             </div>
           </div>
         </div>
@@ -225,7 +248,7 @@
 
           <div class="customization-actions" style="margin-top: 20px;">
             <button class="btn btn-secondary" onclick="resetColorsToTheme()">Reset to Theme Defaults</button>
-            <button class="btn btn-primary" onclick="saveCustomizations()">Save Color Preferences</button>
+            <button class="btn btn-primary" onclick="saveCustomizations()">Save Preferences</button>
           </div>
         </div>
       </div>
@@ -508,6 +531,55 @@
     function updateCursorTrailIntensity(value) {
       document.getElementById('trailIntensityValue').textContent = value + '%';
       localStorage.setItem('cursorTrailIntensity', value);
+      window.cursorOrbIntensity = parseInt(value);
+      // Update immediately if trail is active
+      if (window.cursorOrbEnabled) {
+        window.updateOrbAtCenter();
+      }
+    }
+
+    function updateOrbSizeAndGlow() {
+      if (!window.cursorOrbElement) return;
+
+      const size = 60 + (window.cursorOrbIntensity / 100) * 100;
+      window.cursorOrbElement.style.width = size + 'px';
+      window.cursorOrbElement.style.height = size + 'px';
+
+      const glowIntensity = 20 + (window.cursorOrbIntensity / 100) * 80;
+      const r = parseInt(window.cursorOrbColor.slice(1, 3), 16);
+      const g = parseInt(window.cursorOrbColor.slice(3, 5), 16);
+      const b = parseInt(window.cursorOrbColor.slice(5, 7), 16);
+
+      window.cursorOrbElement.style.boxShadow = `
+        0 0 ${glowIntensity * 0.5}px rgba(${r}, ${g}, ${b}, 0.9),
+        0 0 ${glowIntensity}px rgba(${Math.min(255, r + 35)}, ${Math.min(255, g + 20)}, ${Math.max(0, b - 20)}, 0.7),
+        0 0 ${glowIntensity * 1.5}px rgba(${Math.min(255, r + 70)}, ${Math.min(255, g + 40)}, ${Math.max(0, b - 40)}, 0.5),
+        0 0 ${glowIntensity * 2}px rgba(${Math.min(255, r + 100)}, ${Math.min(255, g + 60)}, ${Math.max(0, b - 60)}, 0.3)
+      `;
+    }
+
+    function updateCursorTrailColor(value) {
+      localStorage.setItem('cursorTrailColor', value);
+      window.cursorOrbColor = value;
+      // Update immediately if trail is active
+      if (window.cursorOrbEnabled) {
+        window.updateOrbAtCenter();
+      }
+    }
+
+
+
+    function updateCursorTrailSpeed(value) {
+      document.getElementById('trailSpeedValue').textContent = value + 's';
+      localStorage.setItem('cursorTrailSpeed', value);
+      window.cursorOrbSpeed = parseFloat(value);
+      if (window.cursorOrbElement) {
+        window.cursorOrbElement.style.transition = `all ${window.cursorOrbSpeed}s ease-out`;
+      }
+      // Update immediately if trail is active
+      if (window.cursorOrbEnabled) {
+        window.updateOrbAtCenter();
+      }
     }
 
     // Initialize color customizations
@@ -552,9 +624,18 @@
     // Initialize cursor trail settings
     const trailEnabled = localStorage.getItem('cursorTrailEnabled') === 'true';
     const trailIntensity = parseInt(localStorage.getItem('cursorTrailIntensity')) || 50;
+    const trailColor = localStorage.getItem('cursorTrailColor') || '#ffffff';
+    const trailSpeed = parseFloat(localStorage.getItem('cursorTrailSpeed')) || 0.3;
     document.getElementById('cursorTrailEnabled').checked = trailEnabled;
     document.getElementById('cursorTrailIntensity').value = trailIntensity;
     document.getElementById('trailIntensityValue').textContent = trailIntensity + '%';
+    document.getElementById('cursorTrailColor').value = trailColor;
+    document.getElementById('cursorTrailSpeed').value = trailSpeed;
+    document.getElementById('trailSpeedValue').textContent = trailSpeed + 's';
+    // Update global variables
+    window.cursorOrbIntensity = trailIntensity;
+    window.cursorOrbColor = trailColor;
+    window.cursorOrbSpeed = trailSpeed;
     if (trailEnabled) {
       initCursorTrail();
     }

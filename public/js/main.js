@@ -290,12 +290,59 @@ window.addEventListener('beforeunload', () => {
 // Cursor orb functionality
 let cursorOrbEnabled = false;
 let cursorOrbIntensity = 50;
+let cursorOrbColor = '#ffffff';
+let cursorOrbSpeed = 0.3;
 let cursorOrbElement = null;
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+// Track mouse position globally
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// Expose for settings updates
+window.cursorOrbIntensity = cursorOrbIntensity;
+window.cursorOrbColor = cursorOrbColor;
+window.cursorOrbSpeed = cursorOrbSpeed;
+window.cursorOrbElement = cursorOrbElement;
+
+// Update orb appearance at current mouse position
+function updateOrbAtCenter() {
+  if (!cursorOrbElement) return;
+
+  const size = 60 + (cursorOrbIntensity / 100) * 100;
+  cursorOrbElement.style.width = size + 'px';
+  cursorOrbElement.style.height = size + 'px';
+  cursorOrbElement.style.left = (mouseX - size / 2) + 'px';
+  cursorOrbElement.style.top = (mouseY - size / 2) + 'px';
+  cursorOrbElement.style.transform = 'none';
+  cursorOrbElement.style.display = 'block';
+
+  const glowIntensity = 20 + (cursorOrbIntensity / 100) * 80;
+  const r = parseInt(cursorOrbColor.slice(1, 3), 16);
+  const g = parseInt(cursorOrbColor.slice(3, 5), 16);
+  const b = parseInt(cursorOrbColor.slice(5, 7), 16);
+
+  cursorOrbElement.style.boxShadow = `
+    0 0 ${glowIntensity * 0.5}px rgba(${r}, ${g}, ${b}, 0.9),
+    0 0 ${glowIntensity}px rgba(${Math.min(255, r + 35)}, ${Math.min(255, g + 20)}, ${Math.max(0, b - 20)}, 0.7),
+    0 0 ${glowIntensity * 1.5}px rgba(${Math.min(255, r + 70)}, ${Math.min(255, g + 40)}, ${Math.max(0, b - 40)}, 0.5),
+    0 0 ${glowIntensity * 2}px rgba(${Math.min(255, r + 100)}, ${Math.min(255, g + 60)}, ${Math.max(0, b - 60)}, 0.3)
+  `;
+
+  cursorOrbElement.style.display = 'block';
+}
+
+window.updateOrbAtCenter = updateOrbAtCenter;
 
 function initCursorTrail() {
   if (cursorOrbEnabled) return;
   cursorOrbEnabled = true;
   cursorOrbIntensity = parseInt(localStorage.getItem('cursorTrailIntensity')) || 50;
+  cursorOrbColor = localStorage.getItem('cursorTrailColor') || '#ffffff';
+  cursorOrbSpeed = parseFloat(localStorage.getItem('cursorTrailSpeed')) || 0.3;
 
   // Create the orb element if it doesn't exist
   if (!cursorOrbElement) {
@@ -303,12 +350,73 @@ function initCursorTrail() {
     cursorOrbElement.className = 'cursor-orb';
     cursorOrbElement.style.position = 'fixed';
     cursorOrbElement.style.pointerEvents = 'none';
-    cursorOrbElement.style.zIndex = '-1';
-    cursorOrbElement.style.transition = 'all 0.3s ease-out';
+    cursorOrbElement.style.zIndex = '9999'; // High z-index to be above everything
     document.body.appendChild(cursorOrbElement);
   }
 
+
+
+  // Update transition speed
+  cursorOrbElement.style.transition = `all ${cursorOrbSpeed}s ease-out`;
+
+  // Set initial appearance
+  const size = 60 + (cursorOrbIntensity / 100) * 100;
+  cursorOrbElement.style.width = size + 'px';
+  cursorOrbElement.style.height = size + 'px';
+
+  // Position at current mouse or center
+  const initialX = (mouseX > 0 ? mouseX : window.innerWidth / 2);
+  const initialY = (mouseY > 0 ? mouseY : window.innerHeight / 2);
+  cursorOrbElement.style.left = (initialX - size / 2) + 'px';
+  cursorOrbElement.style.top = (initialY - size / 2) + 'px';
+  cursorOrbElement.style.transform = 'none';
+  cursorOrbElement.style.display = 'block';
+
   document.addEventListener('mousemove', updateOrb);
+}
+
+function disableCursorTrail() {
+  cursorOrbEnabled = false;
+  document.removeEventListener('mousemove', updateOrb);
+
+
+
+  // Hide the orb
+  if (cursorOrbElement) {
+    cursorOrbElement.style.display = 'none';
+  }
+}
+
+function updateOrb(e) {
+  if (!cursorOrbEnabled || !cursorOrbElement) return;
+
+  // Adjust size based on intensity
+  const size = 60 + (cursorOrbIntensity / 100) * 100; // 60-160px
+  cursorOrbElement.style.width = size + 'px';
+  cursorOrbElement.style.height = size + 'px';
+
+  // Position the orb (center on cursor)
+  cursorOrbElement.style.left = (e.clientX - size / 2) + 'px';
+  cursorOrbElement.style.top = (e.clientY - size / 2) + 'px';
+  cursorOrbElement.style.transform = 'none';
+
+  // Adjust glow intensity with custom color
+  const glowIntensity = 20 + (cursorOrbIntensity / 100) * 80; // 20-100px
+
+  // Parse the color and create glow effects
+  const r = parseInt(cursorOrbColor.slice(1, 3), 16);
+  const g = parseInt(cursorOrbColor.slice(3, 5), 16);
+  const b = parseInt(cursorOrbColor.slice(5, 7), 16);
+
+  cursorOrbElement.style.boxShadow = `
+    0 0 ${glowIntensity * 0.5}px rgba(${r}, ${g}, ${b}, 0.9),
+    0 0 ${glowIntensity}px rgba(${Math.min(255, r + 35)}, ${Math.min(255, g + 20)}, ${Math.max(0, b - 20)}, 0.7),
+    0 0 ${glowIntensity * 1.5}px rgba(${Math.min(255, r + 70)}, ${Math.min(255, g + 40)}, ${Math.max(0, b - 40)}, 0.5),
+    0 0 ${glowIntensity * 2}px rgba(${Math.min(255, r + 100)}, ${Math.min(255, g + 60)}, ${Math.max(0, b - 60)}, 0.3)
+  `;
+
+  // Ensure it's visible
+  cursorOrbElement.style.display = 'block';
 }
 
 function disableCursorTrail() {

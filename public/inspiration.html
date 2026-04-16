@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspiration - MemoryVault</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+        <h1 onclick="window.location.href='index.html'" style="cursor: pointer;">MemoryVault</h1>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="entries.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Entries
+        </a>
+        <a href="trash.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          Trash
+        </a>
+        <a href="inspiration.html" class="active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+          Inspiration
+        </a>
+        <a href="community.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          Community
+        </a>
+        <a href="settings.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div class="user-details">
+            <h4 id="userName">User</h4>
+            <p>Personal Account</p>
+          </div>
+        </div>
+        <a href="#" onclick="logout()" class="btn btn-ghost btn-sm" style="width:100%;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header animation-wrapper">
+        <div>
+          <h2>Inspiration</h2>
+          <p style="color: var(--text-secondary); margin-top: 8px;">Deep questions to spark reflection and journaling</p>
+        </div>
+      </header>
+
+      <div class="inspiration-section animation-wrapper">
+        <div class="question-display" id="questionDisplay">
+          <div class="question-card visible">
+            <div class="question-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 id="questionText">Click "Get Inspired" to see a thought-provoking question</h3>
+            <p id="questionCategory" class="question-category">Life</p>
+          </div>
+        </div>
+
+        <div class="question-controls">
+          <div class="control-group">
+            <label>Category:</label>
+            <select id="categorySelect" onchange="filterQuestions()">
+              <option value="all">All Questions</option>
+              <option value="life">Life & Purpose</option>
+              <option value="relationships">Relationships</option>
+              <option value="feelings">Feelings & Emotions</option>
+              <option value="growth">Personal Growth</option>
+              <option value="future">Future & Dreams</option>
+              <option value="reflection">Self-Reflection</option>
+            </select>
+          </div>
+
+          <div class="control-buttons">
+            <button class="btn btn-primary" onclick="getRandomQuestion()">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+              Get Inspired
+            </button>
+            <button class="btn btn-secondary" onclick="copyQuestion()">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+              </svg>
+              Copy Question
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    const user = getUser();
+    if (user) {
+      const displayName = typeof user === 'string' ? user : (user.username || user.name || user.email || 'User');
+      document.getElementById('userName').textContent = displayName;
+      document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
+    }
+
+    let questionsData = {};
+
+    // Load questions from JSON
+    fetch('/questions.json')
+      .then(response => response.json())
+      .then(data => {
+        questionsData = data;
+      })
+      .catch(error => {
+        console.error('Error loading questions:', error);
+      });
+
+    function getQuestionFromData(category) {
+      if (!questionsData[category] || questionsData[category].length === 0) {
+        return "What question is calling to you right now?";
+      }
+      return questionsData[category][Math.floor(Math.random() * questionsData[category].length)];
+    }
+
+    function generateQuestion(category) {
+      return getQuestionFromData(category);
+    }
+    };
+
+    const aiWordBanks = {
+      life_stage: ["early adulthood", "mid-life transition", "career phase", "parenting years", "empty nest period", "retirement", "later life", "spiritual journey", "professional growth", "personal transformation"],
+      insight: ["hidden truth", "valuable lesson", "profound realization", "unexpected wisdom", "deeper understanding", "spiritual insight", "emotional breakthrough", "clarity of purpose", "self-discovery", "universal truth"],
+      experience: ["personal loss", "unexpected success", "relationship ending", "career change", "health challenge", "travel experience", "creative pursuit", "family dynamic", "friendship evolution", "inner conflict"],
+      life_aspect: ["human connection", "personal purpose", "spiritual growth", "emotional resilience", "life balance", "authentic living", "meaningful work", "loving relationships", "personal freedom", "inner peace"],
+      action: ["relive", "redo", "revisit", "re-examine", "re-evaluate", "reframe", "reimagine", "recreate", "rebuild", "renew"],
+      time_period: ["decade", "chapter", "season", "phase", "era", "period", "stage", "cycle", "journey", "path"],
+      wisdom: ["knowledge", "understanding", "insight", "awareness", "clarity", "wisdom", "truth", "learning", "growth", "transformation"],
+      outcome: ["gain", "extract", "harvest", "learn", "discover", "uncover", "reveal", "find", "achieve", "obtain"],
+      belief: ["understanding", "perspective", "philosophy", "worldview", "mindset", "attitude", "outlook", "approach", "stance", "position"],
+      life_concept: ["mortality", "purpose", "freedom", "responsibility", "connection", "growth", "change", "love", "truth", "beauty"],
+      daily_choice: ["relationships", "work priorities", "personal time", "health decisions", "financial choices", "social interactions", "creative pursuits", "learning opportunities", "rest and recovery", "service to others"],
+      emotion: ["gratitude", "regret", "hope", "fear", "love", "pride", "guilt", "joy", "anxiety", "peace"],
+      future_perspective: ["life goals", "personal values", "relationship priorities", "career aspirations", "spiritual beliefs", "life purpose", "family vision", "community involvement", "personal legacy", "future self"],
+      relationship_dynamic: ["romantic partnership", "parent-child bond", "friendship circle", "professional collaboration", "mentor relationship", "family system", "community connection", "personal partnership", "therapeutic alliance", "creative collaboration"],
+      emotional_quality: ["vulnerability", "trust", "empathy", "compassion", "understanding", "patience", "forgiveness", "acceptance", "kindness", "respect"],
+      communication_pattern: ["open dialogue", "active listening", "emotional expression", "honest feedback", "clear boundaries", "vulnerable sharing", "non-verbal communication", "written expression", "verbal affirmation", "body language"],
+      relationship_type: ["romantic relationship", "familial bond", "professional partnership", "friendship network", "mentorship connection", "community involvement", "therapeutic relationship", "creative collaboration", "personal partnership", "social network"],
+      past_relationship: ["childhood friendship", "first romantic love", "long-term partnership", "professional mentorship", "family estrangement", "healing relationship", "transformative connection", "difficult breakup", "supportive friendship", "spiritual companionship"],
+      communication: ["verbal expression", "non-verbal cues", "written communication", "emotional sharing", "active listening", "boundary setting", "appreciation language", "conflict resolution", "quality time", "physical touch"],
+      relationship: ["partnership", "friendship", "family connection", "professional relationship", "community bond", "personal connection", "romantic relationship", "mentorship", "therapeutic alliance", "creative collaboration"],
+      emotional_pain: ["betrayal", "loss", "rejection", "abandonment", "heartbreak", "disappointment", "grief", "loneliness", "humiliation", "failure"],
+      healthy_behavior: ["boundary setting", "emotional expression", "active listening", "mutual respect", "conflict resolution", "quality time", "appreciation", "support giving", "vulnerability sharing", "growth encouragement"],
+      person_type: ["romantic partner", "close friend", "family member", "colleague", "stranger", "child", "elder", "pet companion", "spiritual guide", "personal mentor"],
+      relationship_value: ["mutual respect", "emotional safety", "trust building", "open communication", "shared growth", "quality time", "physical affection", "verbal affirmation", "acts of service", "receiving gifts"],
+      body_part: ["chest area", "throat region", "stomach space", "head area", "heart center", "gut feeling", "shoulder tension", "jaw tightness", "hand gestures", "eye contact"],
+      emotional_trigger: ["unexpected change", "relationship conflict", "professional setback", "personal criticism", "time pressure", "financial stress", "health concern", "social rejection", "creative block", "environmental chaos"],
+      specific_emotion: ["overwhelming anxiety", "deep sadness", "intense anger", "profound joy", "quiet contentment", "excited anticipation", "peaceful serenity", "creative inspiration", "spiritual connection", "physical exhaustion"],
+      coping_mechanism: ["deep breathing", "mindful walking", "journal writing", "creative expression", "social connection", "physical movement", "meditative practice", "nature immersion", "artistic creation", "music listening"],
+      emotional_process: ["sit with", "explore", "understand", "transform", "release", "integrate", "accept", "process", "work through", "move beyond"],
+      complex_feeling: ["ambivalent grief", "bittersweet nostalgia", "conflicted love", "proud disappointment", "hopeful fear", "joyful sorrow", "peaceful unrest", "excited apprehension", "contented dissatisfaction", "serene anxiety"],
+      challenging_situation: ["career transition", "relationship ending", "health diagnosis", "financial difficulty", "family conflict", "personal loss", "creative block", "social isolation", "identity crisis", "life transition"],
+      body_response: ["rapid heartbeat", "shallow breathing", "muscle tension", "stomach discomfort", "throat constriction", "head pressure", "energy surge", "fatigue wave", "temperature change", "physical shaking"],
+      emotional_awareness: ["internal experience", "feeling recognition", "emotional intelligence", "sensory awareness", "body-mind connection", "intuitive understanding", "emotional literacy", "somatic awareness", "felt sense", "inner knowing"],
+      coping_strategy: ["mindful breathing", "emotional journaling", "support seeking", "boundary setting", "self-compassion practice", "nature connection", "creative expression", "physical movement", "meditative pause", "loving kindness"],
+      emotional_skill: ["sit with discomfort", "express vulnerability", "practice self-compassion", "set healthy boundaries", "communicate needs", "process grief", "cultivate gratitude", "manage anxiety", "express anger", "receive love"],
+      emotional_state: ["overwhelming emotion", "conflicted feeling", "intense sensation", "subtle awareness", "physical discomfort", "emotional turbulence", "inner peace", "spiritual connection", "mental clarity", "physical tension"],
+      relationship_context: ["romantic partnership", "family gathering", "professional meeting", "social event", "personal reflection", "creative collaboration", "therapeutic session", "community activity", "solitary moment", "intimate conversation"],
+      reflection_practice: ["sit in silence", "write freely", "meditate deeply", "walk mindfully", "create art", "talk with trusted friend", "body scan practice", "gratitude listing", "future visualization", "past reflection"],
+      emotional_pattern: ["anxiety response", "anger trigger", "sadness spiral", "joy expression", "fear reaction", "love manifestation", "grief process", "stress response", "excitement pattern", "peace cultivation"],
+      daily_experience: ["morning routine", "work interaction", "family dynamic", "social encounter", "personal project", "leisure activity", "learning session", "rest period", "creative process", "self-care practice"],
+      emotional_action: ["acknowledge", "validate", "embrace", "explore", "understand", "transform", "release", "integrate", "accept", "transcend"],
+      positive_emotion: ["inner peace", "deep gratitude", "genuine joy", "authentic love", "quiet contentment", "spiritual connection", "creative inspiration", "physical vitality", "mental clarity", "emotional freedom"],
+      life_area: ["personal relationships", "professional life", "creative pursuits", "spiritual practice", "physical health", "mental well-being", "financial security", "community involvement", "personal growth", "daily routine"]
+    };
+
+    function generateAIQuestion(category) {
+      const generator = aiQuestionGenerators[category];
+      if (!generator) return "What question is calling to you right now?";
+
+      // Select random theme and structure
+      const theme = generator.themes[Math.floor(Math.random() * generator.themes.length)];
+      const structure = generator.structures[Math.floor(Math.random() * generator.structures.length)];
+
+      // Replace placeholders with sophisticated word selection
+      let question = structure;
+
+      // Replace theme placeholders
+      question = question.replace(/\{[^}]+\}/g, (match) => {
+        const key = match.slice(1, -1);
+        if (generator.themes.includes(key)) {
+          return theme;
+        }
+        const words = aiWordBanks[key];
+        if (words) {
+          return words[Math.floor(Math.random() * words.length)];
+        }
+        return match;
+      });
+
+      return question;
+    }
+
+    const wordBanks = {
+      experience: ["childhood memory", "past failure", "moment of success", "life transition", "unexpected event", "personal achievement", "difficult decision", "moment of clarity", "learning experience", "turning point"],
+      challenge: ["adversity", "setback", "obstacle", "difficulty", "hardship", "trial", "struggle", "crisis", "conflict", "challenge"],
+      concept: ["freedom", "purpose", "happiness", "love", "success", "fulfillment", "meaning", "peace", "growth", "wisdom"],
+      topic: ["society", "relationships", "career", "personal life", "the world", "humanity", "technology", "nature", "art", "spirituality"],
+      activity: ["work", "relationships", "hobbies", "helping others", "learning", "creating", "exploring", "resting", "connecting", "growing"],
+      emotion: ["joy", "fear", "love", "anger", "sadness", "gratitude", "anxiety", "peace", "excitement", "compassion"],
+      goal: ["happiness", "success", "fulfillment", "peace", "growth", "love", "freedom", "purpose", "balance", "wisdom"],
+      person: ["mother", "father", "teacher", "friend", "mentor", "partner", "child", "stranger", "hero", "yourself"],
+      value: ["honesty", "kindness", "courage", "integrity", "compassion", "respect", "responsibility", "loyalty", "empathy", "wisdom"],
+      future_event: ["aging", "change", "loss", "success", "failure", "love", "discovery", "achievement", "regret", "fulfillment"],
+      priority1: ["work", "family", "friends", "health", "hobbies", "rest", "growth", "relationships", "career", "spirituality"],
+      priority2: ["personal time", "social life", "fitness", "learning", "creativity", "travel", "community", "self-care", "ambition", "peace"],
+      personal_need: ["independence", "space", "personal growth", "self-care", "individual goals", "alone time", "personal freedom", "self-expression", "individual identity", "personal boundaries"],
+      relationship_requirement: ["trust", "communication", "support", "understanding", "commitment", "respect", "love", "loyalty", "honesty", "compassion"],
+      situation: ["loss", "change", "success", "failure", "love", "heartbreak", "achievement", "disappointment", "growth", "challenge"],
+      relationship_type: ["romantic relationship", "friendship", "family bond", "professional relationship", "mentorship", "parenting", "partnership", "community connection", "colleague relationship", "acquaintance"],
+      quality: ["trust", "respect", "understanding", "communication", "loyalty", "support", "honesty", "kindness", "empathy", "compassion"],
+      past_relationship: ["first love", "long-term partnership", "friendship", "family relationship", "professional connection", "mentorship", "difficult relationship", "meaningful connection", "toxic relationship", "transformative relationship"],
+      communication: ["open dialogue", "active listening", "emotional expression", "honest feedback", "clear boundaries", "vulnerable sharing", "non-verbal cues", "written communication", "verbal expression", "body language"],
+      healthy_behavior: ["setting boundaries", "expressing needs", "active listening", "showing appreciation", "resolving conflict", "giving space", "offering support", "being present", "practicing forgiveness", "maintaining independence"],
+      person_type: ["partner", "family member", "friend", "colleague", "stranger", "child", "elder", "pet", "yourself", "community"],
+      body_part: ["heart", "mind", "body", "soul", "gut", "chest", "head", "stomach", "throat", "skin"],
+      context: ["daily life", "workplace", "relationships", "stressful situations", "moments of joy", "times of crisis", "social gatherings", "alone time", "decision making", "conflict resolution"],
+      negative_emotion: ["anger", "fear", "sadness", "anxiety", "guilt", "shame", "jealousy", "frustration", "disappointment", "loneliness"],
+      positive_emotion: ["peace", "joy", "gratitude", "love", "hope", "confidence", "serenity", "contentment", "excitement", "compassion"],
+      daily_activity: ["work", "relationships", "exercise", "eating", "sleeping", "learning", "creating", "socializing", "relaxing", "reflecting"],
+      obstacle: ["fear", "doubt", "procrastination", "perfectionism", "comparison", "self-criticism", "lack of motivation", "external pressure", "limited resources", "uncertainty"],
+      growth_area: ["confidence", "resilience", "emotional intelligence", "communication skills", "leadership", "creativity", "discipline", "mindfulness", "adaptability", "empathy"],
+      strength: ["resilience", "compassion", "determination", "creativity", "wisdom", "courage", "patience", "intuition", "adaptability", "kindness"],
+      new_skill: ["public speaking", "cooking", "coding", "painting", "meditation", "language learning", "instrument playing", "gardening", "photography", "writing"],
+      positive_quality: ["motivation", "discipline", "optimism", "focus", "patience", "enthusiasm", "persistence", "curiosity", "gratitude", "mindfulness"],
+      difficult_time: ["crisis", "loss", "change", "failure", "illness", "conflict", "stress", "uncertainty", "transition", "challenge"],
+      better_version: ["wiser", "stronger", "kinder", "more confident", "more patient", "more compassionate", "more resilient", "more authentic", "more present", "more fulfilled"],
+      future_time: ["next year", "five years", "decade", "retirement", "old age", "next chapter", "new beginning", "later life", "future self", "end of life"],
+      contribution: ["work", "art", "teaching", "parenting", "community service", "innovation", "leadership", "creativity", "knowledge sharing", "environmental protection"],
+      uncertainty: ["change", "the unknown", "risk", "failure", "success", "loss", "opportunity", "challenge", "transition", "growth"],
+      future_career: ["field", "industry", "role", "position", "path", "journey", "calling", "profession", "vocation", "purpose"],
+      present_need: ["security", "comfort", "stability", "routine", "familiarity", "control", "certainty", "safety", "predictability", "consistency"],
+      future_dream: ["travel", "career change", "starting a family", "creative pursuit", "learning adventure", "community impact", "personal transformation", "spiritual journey", "business venture", "life experience"],
+      belief_system: ["values", "principles", "faith", "philosophy", "worldview", "morals", "ethics", "spirituality", "cultural background", "personal philosophy"],
+      daily_choice: ["what to eat", "how to spend time", "who to connect with", "what to prioritize", "how to respond", "what to create", "how to rest", "what to learn", "how to give", "how to grow"],
+      contradiction: ["desire for freedom vs need for security", "wanting connection vs valuing independence", "pursuing success vs seeking peace", "being ambitious vs practicing contentment", "helping others vs self-care", "being vulnerable vs protecting yourself", "following rules vs breaking them", "planning vs spontaneity", "tradition vs innovation", "logic vs intuition"],
+      behavior: ["decision making", "relationship patterns", "emotional responses", "daily habits", "communication style", "conflict resolution", "self-care practices", "goal setting", "time management", "stress responses"],
+      inner_quality: ["intuition", "wisdom", "resilience", "compassion", "courage", "authenticity", "creativity", "patience", "empathy", "strength"],
+      self_perception: ["self-worth", "self-image", "self-confidence", "self-acceptance", "self-love", "self-respect", "self-awareness", "self-understanding", "self-compassion", "self-forgiveness"],
+      reality: ["truth", "your nature", "human experience", "life's mysteries", "universal patterns", "personal growth", "interconnectedness", "divine purpose", "cosmic order", "human potential"],
+      authentic_self: ["true nature", "core values", "innermost desires", "spiritual essence", "highest self", "pure intentions", "natural inclinations", "heart's wisdom", "soul's purpose", "essential being"],
+      current_challenge: ["career transition", "relationship difficulty", "health concern", "financial stress", "personal growth", "family issue", "creative block", "emotional struggle", "life change", "self-doubt"]
+    };
+
+    function generateQuestion(category) {
+      return generateAIQuestion(category);
+    }
+
+    function getRandomQuestion() {
+      const category = document.getElementById('categorySelect').value;
+      const actualCategory = category === 'all' ? ['life', 'relationships', 'feelings', 'growth', 'future', 'reflection'][Math.floor(Math.random() * 6)] : category;
+
+      const questionText = generateQuestion(actualCategory);
+      currentQuestion = { text: questionText, category: actualCategory };
+
+    document.getElementById('questionText').textContent = questionText;
+    document.getElementById('questionCategory').textContent = actualCategory.charAt(0).toUpperCase() + actualCategory.slice(1);
+    // Make the card visible
+    document.querySelector('.question-card').classList.add('visible');
+    }
+
+    function copyQuestion() {
+      if (!currentQuestion) {
+        toast.show('No question to copy', 'error');
+        return;
+      }
+
+      navigator.clipboard.writeText(currentQuestion.text).then(() => {
+        toast.show('Question copied to clipboard');
+      }).catch(() => {
+        toast.show('Failed to copy question', 'error');
+      });
+    }
+
+    // Show a random question after page load
+    setTimeout(() => {
+      getRandomQuestion();
+    }, 100);
+  </script>
+</body>
+</html>
